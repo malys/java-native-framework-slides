@@ -7,7 +7,7 @@ slideNumber: true
 title: "Java container optimization"
 ---
 
-# Java containers optimization
+# Java container optimization
 
 ---
 
@@ -273,9 +273,9 @@ Native image -> Static Ahead Of Time with Substrate VM
 * JDK 8: Q3 2023 {.fragment .fade-right}
 * JDK 11: Q4 2022-2024 {.fragment .fade-right}
 * JDK 17: init Q3 2021 {.fragment .fade-right}
-* GraalVM: init 2019 {.fragment .fade-right} 
+* GraalVM: init 2019 {.fragment .fade-right}
 
-v19 support 8 only, 11 working in progress  {.fragment .fade-right}  
+v19 support 8 only, 11 work in progress  {.fragment .fade-right}  
   
 <aside class="notes">
 [Support](https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=1089879229&single=true)
@@ -284,7 +284,11 @@ cycle de 3 ans
 
 --
 
-### Methods
+### Performance
+
+--
+
+#### Methods
 
 --
 
@@ -304,7 +308,7 @@ cycle de 3 ans
 
 --
 
-### Results
+#### Results
 
 --
 
@@ -320,6 +324,188 @@ cycle de 3 ans
 
 --
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=166042169&single=true" style="border:0px #ffffff none;" name="Distribution" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="600px" width="1000px" allowfullscreen></iframe>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=166042169&single=true" style="border:0px #ffffff none;" name="Distribution" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="600px" allowfullscreen></iframe>
 
 --
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=2071947112&single=true" style="border:0px #ffffff none;" name="Distribution" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="600px" allowfullscreen></iframe>
+
+--
+
+**OpenJDK 8** {.fragment .highlight-red}
+
+**OpenJDK 11** {.fragment .highlight-green}
+
+**OpenJ9**  {.fragment .highlight-blue}  
+
+**GraalVM** 
+
+<aside class="notes">
+OpenJDK 8: deprecated
+OpenJDK 11: default
+OpenJ9: focus on memory usage
+GraalVM: wait to see (OpenJDK integration)
+</aside>
+
+--
+
+### Custom JRE
+
+--
+
+#### Java Platform Module System
+
+--
+
+```bash
+# JDK11
+sdk use java 11.0.4.j9-adpt && du -hcs  $JAVA_HOME
+# 300M    /java/11.0.4.j9-adpt
+# Compile
+javac CountUppercase.java
+# Deps
+jdeps --print-module-deps CountUppercase.class
+# Generate distribution
+jlink --no-header-files --no-man-pages --compress=2 --strip-debug \
+ --add-modules  $(jdeps --print-module-deps CountUppercase.class) \
+ --output java-base
+# Custom distribution
+ls java-base/ && du -hcs
+# bin  conf  legal  lib  release -> 39M     java-base/
+JAVA_HOME=$PWD/java-base>
+```
+
+<aside class="notes">
+30MB instead of 116MB ( JRE size) and 320MB for a full JDK.
+</aside>
+
+---
+
+## Java native frameworks
+
+**Native?** {.fragment .fade-right}
+
+--
+
+![](https://img.stackshare.io/stack/443157/m1edT_tX_400x400.jpg) {.fragment .fade-in-then-out}
+
+<img class="centerImage" src="https://miro.medium.com/max/655/1*eIW3gooOD5kApk7qw_82lg.png" alt="graa" style="width: 40%;"/>{.fragment .fade-in-then-semi-out"}
+
+--
+
+### Candidates
+
+--
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=675234315&single=true" style="border:0px #ffffff none;" name="Stream" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="500px" width="700px" allowfullscreen></iframe>
+
+
+<aside class="notes">
+Krihelimeter = 	20	 * authors +
+8	 * merged and proposed pull requests +
+8	 * new and closed issues +
+1	 * commits
+alternative : spark https://www.e4developer.com/2018/06/02/the-rise-of-java-microframeworks/
+</aside>
+
+--
+
+<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1937_RC01/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"quarkus","geo":"","time":"today 12-m"},{"keyword":"helidon","geo":"","time":"today 12-m"},{"keyword":"micronaut","geo":"","time":"today 12-m"}],"category":5,"property":""}, {"exploreQuery":"cat=5&q=quarkus,helidon,micronaut&date=today 12-m,today 12-m,today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); </script> 
+
+--
+
+#### Code
+
+--
+
+* Micronaut vs Quarkus
+
+```diff
+-import io.micronaut.http.annotation.Controller;
++import javax.inject.Inject; 
+ 
+-@Controller("/conferences") 
++@Path("/conferences")
++@Produces(MediaType.APPLICATION_JSON)
+ public class ConferenceController {
+-    private final ConferenceService conferenceService;
++    @Inject
++    private ConferenceService conferenceService;
+-    public ConferenceController(ConferenceService conferenceService) {
+-        this.conferenceService = conferenceService;
+-    }
+-    @Get("/random") 
+-    public Conference randomConf() { 
++    @Path("/random")
++    @GET
++    public Conference randomConf() { 
+         return conferenceService.randomConf();
+     }
+ }
+```
+
+--
+
+* Quarkus vs Spring
+
+```diff
+-import io.micronaut.http.annotation.Controller;
++import org.springframework.web.bind.annotation.RequestMapping;
+ 
+-@Controller("/conferences") 
++@RestController
+ public class ConferenceController {
++    @Autowired
++    private ConferenceService conferenceService;
+-    private final ConferenceService conferenceService;
+-    public ConferenceController(ConferenceService conferenceService) { 
+-        this.conferenceService = conferenceService;
+-    }
+-
+-    @Get("/random") 
+-    public Conference randomConf() { 
++    @RequestMapping("/conferences/random")
++    public Conference randomConf() {
+         return conferenceService.randomConf();
+     }
+ }
+
+``` 
+
+<aside class="notes">
+https://github.com/malys/Native_Java_Framework/compare/quarkus...master
+https://github.com/malys/Native_Java_Framework/compare/quarkus...spring
+
+https://api.github.com/repos/malys/Native_Java_Framework/compare/master...quarkus
+</aside>
+
+
+--
+
+#### Performance
+
+--
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=2096152561&single=true" style="border:0px #ffffff none;" name="Stream" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="700px" allowfullscreen></iframe>
+
+<aside class="notes">
+https://github.com/malys/Native_Java_Framework/compare/quarkus...master
+https://github.com/malys/Native_Java_Framework/compare/quarkus...spring
+
+https://api.github.com/repos/malys/Native_Java_Framework/compare/master...quarkus
+</aside>
+
+
+--
+
+#### Quarkus
+
+Supersonic Subatomic Java
+
+--
+
+![](img/quarkus_how_to.png)
+
+--
+
+![](img/quarkus_perf.png)
