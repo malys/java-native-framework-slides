@@ -5,6 +5,8 @@ highlightTheme: "monokai"
 logoImg: false
 slideNumber: true
 title: "Java container optimization"
+exportHTMLPath: "./"
+previewLinks: false
 ---
 
 # Java container optimization
@@ -123,7 +125,7 @@ Do more with less! {.fragment .highlight-red}
 
 --
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=12271636&single=true" style="border:0px #ffffff none;" name="Distribution" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="800px" width="1000px" allowfullscreen></iframe>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=12271636&single=true" style="border:0px #ffffff none;" name="Distribution" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="400px" width="1000px" allowfullscreen></iframe>
 
 --
 
@@ -143,7 +145,12 @@ Do more with less! {.fragment .highlight-red}
 --
 
 ```bash
-TODO
+docker-slim build \ 
+    --include-exe cut --include-exe sed \ 
+    --include-path /etc/pki \
+    --http-probe \
+    --show-clogs \
+    rh-sso/keycloak-gatekeeper70
 ```
 
 --
@@ -166,11 +173,13 @@ parent contagion {.fragment .fade-right}
 {.fragment .highlight-green}
 
 scanner detection {.fragment .fade-right}
-{.fragment .highlight-red}  
+{.fragment .highlight-red}
+
+docker in docker {.fragment .fade-right}
+{.fragment .highlight-red}
 
 <aside class="notes">
-snyk
-trivy      
+scanner: snyk, trivy      
 </aside>
 
 --
@@ -203,6 +212,11 @@ free and open-source implementation of Java SE. {.fragment .fade-right}
 
 --
 
+* From 11, Class Data Sharing {.fragment .fade-right}
+* Java Platform Module System - *Jigsaw*  {.fragment .fade-right}
+
+--
+
 #### Container friendly
 
 * \> 8u131 {.fragment .fade-in-then-out}
@@ -221,11 +235,13 @@ HotSpot, released as Java HotSpot Performance Engine,[1] is a Java virtual machi
 
 high performance, scalable, JVM implementation that is fully compliant with the Java Virtual Machine Specification. {.fragment .fade-right}
 
+--
+
 * JDK 8-11 {.fragment .fade-right}
 * Container friendly {.fragment .fade-right}
-* Class Data Sharing
-* Dynamic Ahead-Of-Time
-* Startup mode (quick, virtualized)
+* Class Data Sharing {.fragment .fade-right}
+* Dynamic Ahead-Of-Time {.fragment .fade-right}
+* Startup mode (quick, virtualized) {.fragment .fade-right}
 
 <aside class="notes">
 dAOT Update Shared Class Cache at runtime. Runs once, benefit to others.
@@ -236,14 +252,17 @@ Just as with JIT compilations, the compiler only AOT compiles methods that have 
 
 ### GraalVM
 
-next generation Hotspot VM.
+![](https://miro.medium.com/max/655/1*eIW3gooOD5kApk7qw_82lg.png)
+
+next generation Hotspot VM. {.fragment .fade-right}
+
 
 --
 
-* Platform
+* Platform 
 * Polyglot {.fragment .fade-right}
-* Graal Compiler {.fragment .fade-right}
-* Community / Enterprise edition
+* Graal compiler {.fragment .fade-right}
+* Community / Enterprise edition {.fragment .fade-right}
 
 <aside class="notes">
 "client", aussi nommé "C1". Il est utilisé pour les applications desktop, ayant une faible durée de vie (comptée en heures).  Dans ce mode, la JVM démarre plus rapidement mais n’effectue que peu d’optimisations sur le code et a pour objectif de ne pas utiliser beaucoup de ressources matérielles.
@@ -268,16 +287,17 @@ Native image -> Static Ahead Of Time with Substrate VM
 
 --
 
-### LTS/ Production Ready
+### LTS / Production Ready
 
-* JDK 8: Q3 2023 {.fragment .fade-right}
-* JDK 11: Q4 2022-2024 {.fragment .fade-right}
-* JDK 17: init Q3 2021 {.fragment .fade-right}
+* OpenJDK 8: end Q3 2023 {.fragment .fade-right}
+* OpenJDK 11: end Q4 2022-2024 {.fragment .fade-right}
+* OpenJDK 17: init Q3 2021 {.fragment .fade-right}
 * GraalVM: init 2019 {.fragment .fade-right}
-
-v19 support 8 only, 11 work in progress  {.fragment .fade-right}  
+  * v19 support 8 only {.fragment .fade-right}  
+  * 11 work in progress  {.fragment .fade-right}  
   
 <aside class="notes">
+(Hotsport/OpenJ9)
 [Support](https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=1089879229&single=true)
 cycle de 3 ans
 </aside>
@@ -293,10 +313,10 @@ cycle de 3 ans
 --
 
 * Differents use cases:
-  * Stream only
-  * Microprofile
-  * SpringBoot
-  * RH-SSO 7.3
+  * Stream only  {.fragment .fade-right}  
+  * Microprofile  {.fragment .fade-right}  
+  * SpringBoot  {.fragment .fade-right}  
+  * RH-SSO 7.3  {.fragment .fade-right}  
 
 --
 
@@ -312,7 +332,7 @@ cycle de 3 ans
 
 --
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=338344574&single=true" style="border:0px #ffffff none;" name="Stream" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="600px" width="1000px" allowfullscreen></iframe>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=338344574&single=true" style="border:0px #ffffff none;" name="Stream" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="500px" allowfullscreen></iframe>
 
 --
 
@@ -324,13 +344,15 @@ cycle de 3 ans
 
 --
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=166042169&single=true" style="border:0px #ffffff none;" name="Distribution" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="600px" allowfullscreen></iframe>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=166042169&single=true" style="border:0px #ffffff none;" name="RH-SSO7.3" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="500px" allowfullscreen></iframe>
 
 --
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=2071947112&single=true" style="border:0px #ffffff none;" name="Distribution" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="600px" allowfullscreen></iframe>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=2071947112&single=true" style="border:0px #ffffff none;" name="Results" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="600px" allowfullscreen></iframe>
 
 --
+
+##### JRE
 
 **OpenJDK 8** {.fragment .highlight-red}
 
@@ -349,11 +371,17 @@ GraalVM: wait to see (OpenJDK integration)
 
 --
 
-### Custom JRE
+### Java Platform Module System
+
+![](https://docs.toradex.com/102686-modularity-icon.jpg)
+
+<aside class="notes">
+applied app and jvm dependencies
+</aside>
 
 --
 
-#### Java Platform Module System
+#### Custom JRE
 
 --
 
@@ -371,8 +399,8 @@ jlink --no-header-files --no-man-pages --compress=2 --strip-debug \
  --output java-base
 # Custom distribution
 ls java-base/ && du -hcs
-# bin  conf  legal  lib  release -> 39M     java-base/
-JAVA_HOME=$PWD/java-base>
+# bin  conf  legal  lib  release -> java-base/ 39M
+JAVA_HOME=$PWD/java-base
 ```
 
 <aside class="notes">
@@ -479,14 +507,13 @@ https://github.com/malys/Native_Java_Framework/compare/quarkus...spring
 https://api.github.com/repos/malys/Native_Java_Framework/compare/master...quarkus
 </aside>
 
-
 --
 
 #### Performance
 
 --
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=2096152561&single=true" style="border:0px #ffffff none;" name="Stream" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="300px" width="700px" allowfullscreen></iframe>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlum2-EkQbcQiR0xuJAatsmiub8ky3MH8ZIjfVT-ZI6Iw2rwisZ9yolP1HPWhLX22afu22EVUUVLOd/pubhtml?gid=2096152561&single=true" style="border:0px #ffffff none;" name="Stream" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" height="400px" width="900px" allowfullscreen></iframe>
 
 <aside class="notes">
 https://github.com/malys/Native_Java_Framework/compare/quarkus...master
@@ -510,9 +537,17 @@ Supersonic Subatomic Java
 
 ![](img/quarkus_perf.png)
 
+<aside class="notes">
+Thorntail
+</aside>
+
 --
 
 ##### Demo
+
+<aside class="notes">
+see notes
+</aside>
 
 --
 
@@ -520,11 +555,44 @@ Supersonic Subatomic Java
 
 --
 
+##### Limitations
+
 --
+
+| Not Supported                     | Limited                   | 
+|-------------                      |:-----------:              |
+| Dynamic Classloading              | [CDI](https://quarkus.io/guides/cdi-reference#limitations) |
+| [Invoke Dynamic](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/multiple-language-support.html#invokedynamic)                    | Reflection *            |
+| [Finalizer](https://dzone.com/articles/javas-finalizer-is-still-there)                         | [Dymanic proxy](https://www.baeldung.com/java-dynamic-proxies) *         |
+| [Security Manager](https://docs.oracle.com/javase/tutorial/essential/environment/security.html)                  | JNI *                   |
+| [JVM TI, JMX, ...](https://docs.oracle.com/javase/8/docs/platform/jvmti/jvmti.html)   | [Static initializer](https://www.dummies.com/programming/java/how-to-use-static-initializers-in-java/)        |
+|   | Native Windows  |
+|   | Native debug  |
+
+<aside class="notes">
+\* Manual list
+</aside>
+
+---
+
+## Conclusion
+
+--
+
+Quarkus + Microcontainer  {.fragment .fade-right}
+
+![](https://media2.giphy.com/media/Hi199DN7OU4Mg/200.gif) {.fragment .fade-right}
+
+<aside class="notes">
+Quarkus Release 1.0: 10/2019
+GraalVm 19.x: production ready
+</aside>
+
+---
 
 <img class="centerImage" src="./img/thank-you-2490552_1280.png"  style="width: 100%;"/>
 
---
+---
 
 <img class="centerImage" src="./img/question-mark-1872665_1280.jpg"  style="width: 100%;"/>
 
