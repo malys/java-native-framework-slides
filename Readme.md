@@ -5,7 +5,6 @@ highlightTheme: "monokai"
 logoImg: false
 slideNumber: true
 title: "Java container optimization"
-exportHTMLPath: "./"
 previewLinks: false
 ---
 
