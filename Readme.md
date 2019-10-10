@@ -37,13 +37,20 @@ New One (microservice)
 
 --
 
-Do more with less! {.fragment .highlight-red}
+Do more with less! {.fragment .highlight-green}
 
 * CPU {.fragment .fade-right}
 * Memory footprint {.fragment .fade-right}
 * IO {.fragment .fade-right}
 * Security {.fragment .fade-right}
 
+--
+
+Focus on needs! {.fragment .highlight-green}
+
+* Run my java application {.fragment .fade-right}
+* Run my java application {.fragment .fade-right}
+* Run my java application {.fragment .fade-right}
 
 ---
 
@@ -168,7 +175,7 @@ distribution agnostic {.fragment .fade-right}
 reduce surface attack {.fragment .fade-right}
 {.fragment .highlight-green}
  
-parent contagion {.fragment .fade-right}
+limit parent contagion {.fragment .fade-right}
 {.fragment .highlight-green}
 
 scanner detection {.fragment .fade-right}
@@ -288,10 +295,10 @@ Native image -> Static Ahead Of Time with Substrate VM
 
 ### LTS / Production Ready
 
-* OpenJDK 8: end Q3 2023 {.fragment .fade-right}
-* OpenJDK 11: end Q4 2022-2024 {.fragment .fade-right}
-* OpenJDK 17: init Q3 2021 {.fragment .fade-right}
-* GraalVM: init 2019 {.fragment .fade-right}
+* OpenJDK 8: *end Q3 2023* {.fragment .fade-right}
+* OpenJDK 11: *end Q4 2022-2024* {.fragment .fade-right}
+* OpenJDK 17: *init Q3 2021* {.fragment .fade-right}
+* GraalVM: *init 2019* {.fragment .fade-right}
   * v19 support 8 only {.fragment .fade-right}  
   * 11 work in progress  {.fragment .fade-right}  
   
